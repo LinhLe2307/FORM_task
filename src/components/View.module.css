@@ -1,0 +1,20 @@
+.view {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  /* padding: 2rem; */
+}
+
+.view p:before {
+  background-color: #472525;
+  border-right: 1px double rgb(145, 58, 58);
+  width: 2rem;
+}
+
+.view p {
+  height: 3rem;
+  border-bottom: 1px dotted grey;
+  padding-left: 2rem;
+  display: flex;
+  align-items: center;
+}
