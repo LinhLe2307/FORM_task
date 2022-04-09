@@ -22,20 +22,11 @@ class App extends Component {
   addSubmitHandler = (event) => {
     event.preventDefault();
 
-    if (this.state.showPopup) {
-      this.setState({
-        ...this.state,
-        showPopup: false,
-      });
-    } else {
-      this.setState({
-        ...this.state,
-        showPopup: true,
-      });
-    }
+    this.setState((prevState) => ({
+      showPopup: !prevState.showPopup,
+    }));
   };
   render() {
-    
     return (
       <div>
         <Form onChange={this.changeHandler} onClick={this.addSubmitHandler} />
@@ -45,7 +36,6 @@ class App extends Component {
           onClick={this.addSubmitHandler}
           state={this.state}
         />
-
       </div>
     );
   }
