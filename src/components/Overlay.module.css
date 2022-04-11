@@ -1,7 +1,4 @@
-.overlay {
-  display: none;
-}
-.overlay-block {
+.popUp {
   position: fixed;
   display: flex;
   justify-content: center;

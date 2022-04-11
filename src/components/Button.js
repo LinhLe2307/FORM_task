@@ -1,8 +1,12 @@
 import React from "react";
-import classes from "./Button.module.css"
+import classes from "./Button.module.css";
 
-const Button = ({onClick, btnName}) => {
-  return <button type="submit" onClick={onClick}>{btnName}</button>;
+const Button = ({ onClick, children, onReset }) => {
+  return (
+    <button type="submit" onClick={onClick} onReset={onReset}>
+      {children}
+    </button>
+  );
 };
 
 export default Button;

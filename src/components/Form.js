@@ -2,29 +2,59 @@ import React from "react";
 import classes from "./Form.module.css";
 import Button from "./Button";
 
-const Form = ({ onChange, onClick }) => {
+const Form = ({
+  onChange,
+  onSubmit,
+  firstname,
+  lastname,
+  phonenumber,
+  role,
+  message,
+}) => {
   return (
-    <form>
+    <form onChange={onChange} onSubmit={onSubmit}>
       <div>
-        <label htmlFor="fname">First Name</label>
-        <input type="text" id="fname" name="firstName" onChange={onChange} />
+        <label htmlFor="firstname">First Name</label>
+        <input
+          type="text"
+          id="firstname"
+          name="firstname"
+          value={firstname}
+          required
+        />
       </div>
       <div>
-        <label htmlFor="lname">Last Name</label>
-        <input type="text" id="lname" name="lastName" onChange={onChange} />
+        <label htmlFor="lastname">Last Name</label>
+        <input
+          type="text"
+          id="lastname"
+          name="lastname"
+          value={lastname}
+          required
+        />
       </div>
       <div>
         <label htmlFor="phone">Phone Number</label>
         <input
-          type="number"
+          type="tel"
           id="phone"
-          name="phoneNumber"
-          onChange={onChange}
+          name="phonenumber"
+          value={phonenumber}
+          required
         />
       </div>
       <div>
         <label htmlFor="role">Role</label>
-        <select id="role" name="role" onChange={onChange}>
+        <select
+          id="role"
+          name="role"
+          value={role}
+          defaultValue="other"
+          required
+        >
+          <option value="" invalid="true" hidden>
+            Choose a role...
+          </option>
           <option value="teacher">Teacher</option>
           <option value="student">Student</option>
           <option value="other">Other</option>
@@ -32,9 +62,15 @@ const Form = ({ onChange, onClick }) => {
       </div>
       <div>
         <label htmlFor="message">Message</label>
-        <textarea type="text" id="message" name="message" onChange={onChange} />
+        <textarea
+          type="text"
+          id="message"
+          name="message"
+          value={message}
+          required
+        />
       </div>
-      <Button btnName="Send" onClick={onClick} />
+      <Button>Send</Button>
     </form>
   );
 };

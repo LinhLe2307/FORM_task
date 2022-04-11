@@ -7,16 +7,22 @@ import Overlay from "./components/Overlay";
 
 class App extends Component {
   state = {
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    message: "",
-    role: "",
+    // This is explicitly telling React what to look since we will have more state in the future
+    inputData: {
+      firstname: "",
+      lastname: "",
+      phonenumber: "",
+      message: "",
+      role: "",
+    },
     showPopup: false,
   };
-  changeHandler = (event) => {
+  inputHandler = (event) => {
     this.setState({
-      [event.target.name]: event.target.value,
+      inputData: {
+        ...this.state.inputData,
+        [event.target.name]: event.target.value,
+      },
     });
   };
   addSubmitHandler = (event) => {
@@ -26,16 +32,38 @@ class App extends Component {
       showPopup: !prevState.showPopup,
     }));
   };
+
+  resetForm = (event) => {
+    window.location.reload();
+  };
+  // resetForm = () => {
+  //   return this.setState({
+  //     inputData: {
+  //       firstname: "",
+  //       lastname: "",
+  //       phonenumber: "",
+  //       message: "",
+  //       role: "",
+  //     },
+  //   });
+  // };
   render() {
     return (
       <div>
-        <Form onChange={this.changeHandler} onClick={this.addSubmitHandler} />
-        <View input={this.state} />
-        <Overlay
-          showPopup={this.state.showPopup}
-          onClick={this.addSubmitHandler}
-          state={this.state}
+        <Form
+          onChange={this.inputHandler}
+          onSubmit={this.addSubmitHandler}
+          {...this.state.inputData}
         />
+        <View {...this.state.inputData} />
+        {this.state.showPopup && (
+          <Overlay
+            close={this.resetForm}
+            click={this.addSubmitHandler}
+            {...this.state.inputData}
+            reset={this.resetForm}
+          />
+        )}
       </div>
     );
   }

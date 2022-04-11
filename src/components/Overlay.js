@@ -2,26 +2,28 @@ import React from "react";
 import classes from "./Overlay.module.css";
 import Button from "./Button";
 
-const Overlay = ({ state, showPopup, onClick }) => {
-  let classStyle;
-  if (showPopup) {
-    classStyle = "overlay-block";
-  } else {
-    classStyle = "overlay";
-  }
-
-    return (
-      <div className={`${classes[classStyle]}`}>
-        <div className={classes.popUpText}>
-          <p>First name: {state.firstName}</p>
-          <p>Last name: {state.lastName}</p>
-          <p>Phone number: {state.phoneNumber}</p>
-          <p>Role: {state.role}</p>
-          <p>Message: {state.message}</p>
-          <Button onClick={onClick} btnName="close" />
-        </div>
+const Overlay = ({
+  firstname,
+  lastname,
+  phonenumber,
+  message,
+  role,
+  close,
+  click,
+}) => {
+  return (
+    <div className={`${classes.popUp}`}>
+      <div className={classes.popUpText}>
+        <p>First name: {firstname}</p>
+        <p>Last name: {lastname}</p>
+        <p>Phone number: {phonenumber}</p>
+        <p>Role: {role}</p>
+        <p>Message: {message}</p>
+        <Button onClick={close}>I want to submit</Button>
+        <Button onClick={click}>Nope, I want to cancel</Button>
       </div>
-    );
+    </div>
+  );
 };
 
 export default Overlay;
