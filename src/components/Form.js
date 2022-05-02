@@ -3,8 +3,8 @@ import classes from "./Form.module.css";
 import Button from "./Button";
 
 const Form = ({
-  onChange,
-  onSubmit,
+  change,
+  submit,
   firstname,
   lastname,
   phonenumber,
@@ -12,7 +12,7 @@ const Form = ({
   message,
 }) => {
   return (
-    <form onChange={onChange} onSubmit={onSubmit}>
+    <form onChange={change} onSubmit={submit}>
       <div>
         <label htmlFor="firstname">First Name</label>
         <input
@@ -43,15 +43,10 @@ const Form = ({
           required
         />
       </div>
+
       <div>
         <label htmlFor="role">Role</label>
-        <select
-          id="role"
-          name="role"
-          value={role}
-          defaultValue="other"
-          required
-        >
+        <select id="role" name="role" defaultValue="other" required>
           <option value="" invalid="true" hidden>
             Choose a role...
           </option>
@@ -60,6 +55,7 @@ const Form = ({
           <option value="other">Other</option>
         </select>
       </div>
+
       <div>
         <label htmlFor="message">Message</label>
         <textarea
@@ -70,6 +66,8 @@ const Form = ({
           required
         />
       </div>
+
+
       <Button>Send</Button>
     </form>
   );

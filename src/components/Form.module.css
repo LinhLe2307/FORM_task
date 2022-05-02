@@ -35,6 +35,10 @@ textarea {
   font-family: inherit;
 }
 
+select {
+  width: 11rem;
+}
+
 input {
   height: 1.5rem;
 }
