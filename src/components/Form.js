@@ -19,7 +19,7 @@ const Form = ({
           type="text"
           id="firstname"
           name="firstname"
-          value={firstname}
+          defaultValue={firstname}
           required
         />
       </div>
@@ -29,7 +29,7 @@ const Form = ({
           type="text"
           id="lastname"
           name="lastname"
-          value={lastname}
+          defaultValue={lastname}
           required
         />
       </div>
@@ -39,7 +39,7 @@ const Form = ({
           type="tel"
           id="phone"
           name="phonenumber"
-          value={phonenumber}
+          defaultValue={phonenumber}
           required
         />
       </div>
@@ -62,7 +62,7 @@ const Form = ({
           type="text"
           id="message"
           name="message"
-          value={message}
+          defaultValue={message}
           required
         />
       </div>

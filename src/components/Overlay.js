@@ -8,8 +8,8 @@ const Overlay = ({
   phonenumber,
   message,
   role,
+  submit,
   close,
-  click,
 }) => {
   return (
     <div className={`${classes.popUp}`}>
@@ -19,8 +19,8 @@ const Overlay = ({
         <p>Phone number: {phonenumber}</p>
         <p>Role: {role}</p>
         <p>Message: {message}</p>
-        <Button onClick={close}>I want to submit</Button>
-        <Button onClick={click}>Nope, I want to cancel</Button>
+        <Button onClick={submit}>I want to submit</Button>
+        <Button onClick={close}>Nope, I want to cancel</Button>
       </div>
     </div>
   );

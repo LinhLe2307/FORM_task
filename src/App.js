@@ -30,45 +30,26 @@ class App extends Component {
     });
   };
 
-  addSubmitHandler = (event) => {
+  popUpHandler = (event) => {
     event.preventDefault();
-
-    // axios
-    //   .post("http://localhost:3010/notes", {
-    //     firstname: this.state.inputData.firstname,
-    //     lastname: this.state.inputData.lastname,
-    //     phonenumber: this.state.inputData.phonenumber,
-    //     message: this.state.inputData.message,
-    //     role: this.state.inputData.role,
-    //   })
-    //   .then((response) => console.log(response))
-    //   .catch((error) => console.log(error));
-
-    axios
-      .post("http://localhost:3010/notes", this.state.inputData)
-      .then((res) => console.log("res", res))
-      .catch((error) => console.log("error", error));
-
     this.setState((prevState) => ({
       showPopup: !prevState.showPopup,
     }));
   };
 
+  addSubmitHandler = (event) => {
+    event.preventDefault();
+
+    axios
+      .post("http://localhost:3010/notes", this.state.inputData)
+      .then((res) => console.log("res", res))
+      .catch((error) => console.log("error", error));
+    this.resetForm();
+  };
+
   resetForm = (event) => {
     window.location.reload();
   };
-
-  // resetForm = () => {
-  //   return this.setState({
-  //     inputData: {
-  //       firstname: "",
-  //       lastname: "",
-  //       phonenumber: "",
-  //       message: "",
-  //       role: "",
-  //     },
-  //   });
-  // };
 
   componentDidMount() {
     axios.get("http://localhost:3010/notes").then((response) =>
@@ -79,26 +60,37 @@ class App extends Component {
   }
 
   render() {
+    const deleteHandler = (event, id) => {
+      event.preventDefault();
+
+      this.setState((prevState) => ({
+        data: prevState.data.filter((data) => data.id !== id),
+      }));
+
+      axios
+        .delete(`http://localhost:3010/notes/${id}`)
+        .then((res) => console.log("res", res))
+        .catch((error) => console.log("error", error));
+    };
     return (
       <>
         <div className="input-form">
           <Form
             change={this.inputHandler}
             {...this.state.inputData}
-            submit={this.addSubmitHandler}
+            submit={this.popUpHandler}
           />
           <View {...this.state.inputData} />
           {this.state.showPopup && (
             <Overlay
-              close={this.resetForm}
-              click={this.addSubmitHandler}
+              submit={this.addSubmitHandler}
               {...this.state.inputData}
-              reset={this.resetForm}
+              close={this.resetForm}
             />
           )}
         </div>
 
-        <NoteList data={this.state.data} />
+        <NoteList data={this.state.data} delete={deleteHandler} />
       </>
     );
   }
