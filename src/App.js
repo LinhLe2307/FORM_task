@@ -5,6 +5,7 @@ import Form from "./components/Form";
 import View from "./components/View";
 import Overlay from "./components/Overlay";
 import NoteList from "./components/NoteList";
+import EditForm from "./components/EditForm";
 import axios from "axios";
 
 class App extends Component {
@@ -20,6 +21,9 @@ class App extends Component {
     showPopup: false,
     data: [],
     isLoading: false,
+    updatePopup: false,
+    currentNote: {},
+    itemId: null,
   };
   inputHandler = (event) => {
     this.setState({
@@ -51,6 +55,54 @@ class App extends Component {
     window.location.reload();
   };
 
+  deleteHandler = (event, id) => {
+    event.preventDefault();
+
+    axios
+      .delete(`http://localhost:3010/notes/${id}`)
+      .then((res) => {
+        this.setState((prevState) => ({
+          data: prevState.data.filter((item) => item.id !== id),
+        }));
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  updateHandler = (item, id) => {
+    this.setState(
+      (prevState) => ({
+        updatePopup: !prevState.updatePopup,
+        currentNote: item,
+        itemId: id,
+      })
+    );
+  };
+
+  inputUpdateHandler = (e) => {
+    e.preventDefault();
+    this.setState(
+      {
+        currentNote: {
+          ...this.state.currentNote,
+          [e.target.name]: e.target.value,
+        },
+      },
+    );
+    this.postHandler();
+  };
+
+  postHandler = () => {
+    axios
+      .put(
+        `http://localhost:3010/notes/${this.state.itemId}`,
+        this.state.currentNote
+      )
+      .then((res) => {
+        console.log("success", res);
+      })
+      .catch((error) => console.log("error", error));
+  };
+
   componentDidMount() {
     axios.get("http://localhost:3010/notes").then((response) =>
       this.setState({
@@ -60,18 +112,6 @@ class App extends Component {
   }
 
   render() {
-    const deleteHandler = (event, id) => {
-      event.preventDefault();
-
-      this.setState((prevState) => ({
-        data: prevState.data.filter((data) => data.id !== id),
-      }));
-
-      axios
-        .delete(`http://localhost:3010/notes/${id}`)
-        .then((res) => console.log("res", res))
-        .catch((error) => console.log("error", error));
-    };
     return (
       <>
         <div className="input-form">
@@ -90,7 +130,20 @@ class App extends Component {
           )}
         </div>
 
-        <NoteList data={this.state.data} delete={deleteHandler} />
+        <NoteList
+          data={this.state.data}
+          delete={this.deleteHandler}
+          edit={this.updateHandler}
+          postHandler={this.postHandler}
+        />
+
+        {this.state.updatePopup && (
+          <EditForm
+            change={this.inputUpdateHandler}
+            {...this.state.currentNote}
+            // submit={this.addSubmitHandler}
+          />
+        )}
       </>
     );
   }

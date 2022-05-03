@@ -1,5 +1,6 @@
 import React from "react";
-// import Button from "./Button";
+import Button from "./Button";
+import classes from "./Button.module.css";
 
 const NoteList = (props) => {
   return (
@@ -8,7 +9,20 @@ const NoteList = (props) => {
         <li key={note.id}>
           {note.firstname} {note.lastname} | {note.phonenumber} |{note.role} |{" "}
           {note.message}
-          <button onClick={(e) => props.delete(e, note.id)}>X</button>
+          <Button
+            className={classes.deleteBtn}
+            onClick={(e) => props.delete(e, note.id)}
+          >
+            <span class="material-symbols-outlined">X</span>
+          </Button>
+          <Button
+            className={classes.updateBtn}
+            onClick={() => {
+              props.edit(note, note.id);
+            }}
+          >
+            Update
+          </Button>
         </li>
       ))}
     </ol>
