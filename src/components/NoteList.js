@@ -1,6 +1,4 @@
 import React from "react";
-import Button from "./Button";
-import classes from "./Button.module.css";
 
 const NoteList = (props) => {
   return (
@@ -9,20 +7,20 @@ const NoteList = (props) => {
         <li key={note.id}>
           {note.firstname} {note.lastname} | {note.phonenumber} |{note.role} |{" "}
           {note.message}
-          <Button
-            className={classes.deleteBtn}
+          <span
+            class="material-symbols-rounded"
             onClick={(e) => props.delete(e, note.id)}
           >
-            <span class="material-symbols-outlined">X</span>
-          </Button>
-          <Button
-            className={classes.updateBtn}
+            delete
+          </span>
+          <span
+            class="material-symbols-rounded"
             onClick={() => {
-              props.edit(note, note.id);
+              props.edit(note);
             }}
           >
-            Update
-          </Button>
+            edit
+          </span>
         </li>
       ))}
     </ol>

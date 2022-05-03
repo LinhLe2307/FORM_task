@@ -23,7 +23,6 @@ class App extends Component {
     isLoading: false,
     updatePopup: false,
     currentNote: {},
-    itemId: null,
   };
   inputHandler = (event) => {
     this.setState({
@@ -68,33 +67,27 @@ class App extends Component {
       .catch((error) => console.log("error", error));
   };
 
-  updateHandler = (item, id) => {
-    this.setState(
-      (prevState) => ({
-        updatePopup: !prevState.updatePopup,
-        currentNote: item,
-        itemId: id,
-      })
-    );
+  updateHandler = (item) => {
+    this.setState((prevState) => ({
+      updatePopup: !prevState.updatePopup,
+      currentNote: item,
+    }));
   };
 
   inputUpdateHandler = (e) => {
     e.preventDefault();
-    this.setState(
-      {
-        currentNote: {
-          ...this.state.currentNote,
-          [e.target.name]: e.target.value,
-        },
+    this.setState({
+      currentNote: {
+        ...this.state.currentNote,
+        [e.target.name]: e.target.value,
       },
-    );
-    this.postHandler();
+    });
   };
 
-  postHandler = () => {
+  postHandler = (id) => {
     axios
       .put(
-        `http://localhost:3010/notes/${this.state.itemId}`,
+        `http://localhost:3010/notes/${id}`,
         this.state.currentNote
       )
       .then((res) => {
@@ -141,7 +134,7 @@ class App extends Component {
           <EditForm
             change={this.inputUpdateHandler}
             {...this.state.currentNote}
-            // submit={this.addSubmitHandler}
+            submit={() => this.postHandler(this.state.currentNote.id)}
           />
         )}
       </>
